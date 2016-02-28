@@ -1,0 +1,4 @@
+var Map = (function (mapData) {
+
+
+});
