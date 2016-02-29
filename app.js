@@ -1,10 +1,21 @@
 
-function init(memory, map) {
+function init(memory, config) {
 
-    var robot = new Robot(map);
-    var interpreter = $$(memory, robot);
 
-    interpreter.executeCommand();
+
+    var io = new IOStream();
+    var interpreter = $$(memory, io);
+    var robot = new Robot(config, io);
+
+    function step () {
+        interpreter.executeCommand();
+        robot.executeCommand();
+    }
+
+    step();
+
+
+/*    interpreter.executeCommand();
     interpreter.executeCommand();
     interpreter.executeCommand();
     interpreter.executeCommand();
@@ -12,7 +23,7 @@ function init(memory, map) {
     interpreter.executeCommand();
 
     interpreter.print();
-    robot.print();
+    robot.print();*/
 }
 
 init(
@@ -33,3 +44,33 @@ init(
         }
     }
 );
+
+
+function IOStream () {
+
+    var memory = null;
+    var _isSetCommand = false;
+
+    this.isSetCommand = function () {
+        return _isSetCommand;
+    };
+
+    this.setCommand = function () {
+        _isSetCommand = true;
+    };
+
+    this.setMemory = function (_memory) {
+        memory = _memory;
+    };
+
+    //get value from MEMORY[255]
+    this.read = function () {
+        return memory.get(255);
+    };
+
+    //write value to MEMORY[255]
+    this.write = function (value) {
+        memory.put(255, value);
+        _isSetCommand = false;
+    };
+}

@@ -1,4 +1,4 @@
-var $$ = (function (memory, robot) {
+var $$ = (function (memory, io) {
 
     /*
 
@@ -60,7 +60,7 @@ var $$ = (function (memory, robot) {
         };
         this.print = function () {
             console.log(program);
-        }
+        };
     }
 
     function Registers(size) {
@@ -71,15 +71,22 @@ var $$ = (function (memory, robot) {
         this.put = function (register, value) {
             registers[register] = value;
         };
+        this.toString = function () {
+            return registers.map(function (register, i) {
+                return 'R' + i + ' - ' + register;
+            }).join('\n');
+        };
         this.print = function () {
-            console.log(registers);
+            console.log(this.toString());
         };
     }
 
-    function Interpreter(memory, registers, robot) {
+    function Interpreter(memory, registers, io) {
         this.pattern = new Pattern();
         this.pointer = 0;
         this.commands = {};
+
+        io.setMemory(memory);
 
         var self = this;
 
@@ -103,9 +110,9 @@ var $$ = (function (memory, robot) {
         };
         this.commands[commandENUM.SET_MEM_RI$R0] = function (i) {
             memory.put(registers.get(i), registers.get(0));
-            //work with Robot
+            //work with io
             if(registers.get(i) == 255) {
-                self.executeRobotCommand();
+                self.setCommand();
             }
         };
         this.commands[commandENUM.LOGIC_1] = function (i) {
@@ -140,9 +147,9 @@ var $$ = (function (memory, robot) {
             var temp = registers.get(0);
             registers.put(0, memory.get(registers.get(i)));
             memory.put(registers.get(i), temp);
-            //work with Robot
+            //work with io
             if(registers.get(i) == 255) {
-                self.executeRobotCommand();
+                self.setCommand();
             }
         };
 
@@ -152,8 +159,8 @@ var $$ = (function (memory, robot) {
             this.commands[command.type](command.i, command.j);
         };
 
-        this.executeRobotCommand = function () {
-            memory.put(255, robot.executeCommand(memory.get(255)));
+        this.setCommand = function () {
+            io.setCommand();
         };
 
         this.print = function () {
@@ -297,14 +304,14 @@ var $$ = (function (memory, robot) {
             return !this.jInterval ? null : (value - this.start) % (this.iInterval.mul ? this.iInterval.mul : 1);
         }
     }
-    function init(memory, robot) {
+    function init(memory, io) {
         return new Interpreter(
             new Memory(memory),
             new Registers(8),
-            robot
+            io
         );
     }
 
-    return init(memory, robot);
+    return init(memory, io);
 
 });

@@ -12,19 +12,27 @@ function Map (mapData) {
     this.put = function (cell, type) {
         return map[cell.y][cell.x] = type;
     };
+
+    this.toString = function () {
+        return map.map(function (row) {
+            return row.join(' ');
+        }).join('\n');
+    };
+
+    this.print = function () {
+        console.log(this.toString());
+    };
 }
 
 
 /*
  *   0 - empty cell
  *   1 - wall cell
- *   2 - robot
- *   3 - label
+ *   2 - label
  */
 
 Map.typesEnum = {
     EMPTY: 0,
     WALL: 1,
-    ROBOT: 2,
-    LABEL: 3
+    LABEL: 2
 };

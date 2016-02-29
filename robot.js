@@ -1,4 +1,7 @@
-var Robot = function (config) {
+var Robot = function (config, io) {
+
+    this.io = io;
+
     var map = new Map(config.map);
     var storage = config.robot.storage;
     var capacity = config.robot.capacity;
@@ -66,12 +69,20 @@ var Robot = function (config) {
         }
     };
 
-    this.executeCommand = function (command) {
-        return commands[command]();
+    this.executeCommand = function () {
+        var command = this.io.read();
+        if(this.io.isSetCommand()) {
+            if(command == 255) {
+                return false;
+            } else {
+                this.io.write(commands[command]());
+                return true;
+            }
+        }
     };
 
     this.print = function () {
-        console.log()
+        map.print();
     };
 };
 
