@@ -112,7 +112,7 @@ var $$ = (function (memory, io) {
             memory.put(registers.get(i), registers.get(0));
             //work with io
             if(registers.get(i) == 255) {
-                self.setCommand();
+                self.streamFlush();
             }
         };
         this.commands[commandENUM.LOGIC_1] = function (i) {
@@ -149,7 +149,7 @@ var $$ = (function (memory, io) {
             memory.put(registers.get(i), temp);
             //work with io
             if(registers.get(i) == 255) {
-                self.setCommand();
+                self.streamFlush();
             }
         };
 
@@ -159,7 +159,7 @@ var $$ = (function (memory, io) {
             this.commands[command.type](command.i, command.j);
         };
 
-        this.setCommand = function () {
+        this.streamFlush = function () {
             io.setCommand();
         };
 
