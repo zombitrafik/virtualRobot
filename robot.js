@@ -10,23 +10,26 @@ var Robot = function (config, io) {
     var moveEnum = {
         LEFT: new Vector2(-1, 0),
         RIGHT: new Vector2(1, 0),
-        UP: new Vector2(0, 1),
-        DOWN: new Vector2(0, -1)
+        UP: new Vector2(0, -1),
+        DOWN: new Vector2(0, 1)
     };
 
     var self = this;
 
     var commands = {
         '0': function () {
+            console.log('CHECK IS LABEL', map.is(position, Map.typesEnum.LABEL));
             return map.is(position, Map.typesEnum.LABEL)?255:0;
         },
         '1': function () {
+            console.log('GET STORAGE', storage);
             return storage;
         },
         '2': function () {
             if(!map.is(position, Map.typesEnum.LABEL) && storage > 0) {
                 map.put(position, Map.typesEnum.LABEL);
-                capacity--;
+                console.log('PUT LABEL');
+                storage--;
                 return 255;
             } else {
                 return 0;
@@ -35,6 +38,7 @@ var Robot = function (config, io) {
         '3': function () {
             if(map.is(position, Map.typesEnum.LABEL) && storage < capacity) {
                 map.put(position, Map.typesEnum.EMPTY);
+                console.log('PICK UP');
                 storage++;
                 return 255;
             } else {
@@ -52,10 +56,6 @@ var Robot = function (config, io) {
         },
         '7': function () {
             return self.move(moveEnum.LEFT)?255:0;
-        },
-        '255': function () {
-            //exit
-            return null;
         }
     };
 
@@ -63,8 +63,10 @@ var Robot = function (config, io) {
         var nextPosition = position.add(side);
         if(!map.is(nextPosition, Map.typesEnum.WALL)) {
             position = nextPosition;
+            console.log('MOVE ', side);
             return true;
         } else {
+            console.log('CANT MOVE ', side);
             return false;
         }
     };
@@ -73,12 +75,14 @@ var Robot = function (config, io) {
         var command = this.io.read();
         if(this.io.isSetCommand()) {
             if(command == 255) {
+                console.log('EXIT');
                 return false;
             } else {
                 this.io.write(commands[command]());
                 return true;
             }
         }
+        return true;
     };
 
     this.print = function () {
