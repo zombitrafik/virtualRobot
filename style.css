@@ -1,5 +1,6 @@
 * {
     font-family: monospace;
+    -webkit-font-smoothing : none;
 }
 
 .debugger .memory {
@@ -12,11 +13,17 @@
 
 .debugger .registers {
     display: inline-block;
-    margin-left: 40px;
+    color: #F8F8F2;
+    background: #272822;
+    padding: 0 10px;
+    height: 300px;
+    width: 60px;
+    border-left: 1px solid #484848;
+    float: left;
 }
 
 .debugger .registers div span {
-    color: red;
+    color: #4495cc;
 }
 
 .debugger .memory div.active {
@@ -26,4 +33,14 @@
 .debugger .memory div.active span {
     color: #FFB00F;
     font-weight: bolder;
+}
+
+
+.field {
+    display: inline-block;
+    width: 300px;
+    background: #272822;;
+    padding: 0;
+    height: 300px;
+    margin-left: 30px;
 }
