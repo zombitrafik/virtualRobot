@@ -3,13 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title></title>
+    <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
+    <div class="container">
+        <div class="actions">
+            <button onclick="run()">RUN</button>
+            <button onclick="step()">ONE STEP</button>
+        </div>
+        <div class="debugger">
+            <pre class="memory">
 
+            </pre>
+            <pre class="registers">
+
+            </pre>
+        </div>
+    </div>
 </body>
-<script type="text/javascript" src="interpreter.js"></script>
-<script type="text/javascript" src="iostream.js"></script>
-<script type="text/javascript" src="map.js"></script>
-<script type="text/javascript" src="robot.js"></script>
+<script type="text/javascript" src="core/interpreter.js"></script>
+<script type="text/javascript" src="core/iostream.js"></script>
+<script type="text/javascript" src="core/map.js"></script>
+<script type="text/javascript" src="core/robot.js"></script>
 <script type="text/javascript" src="app.js"></script>
 </html>

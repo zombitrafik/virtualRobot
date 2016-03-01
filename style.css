@@ -1,0 +1,21 @@
+* {
+    font-family: monospace;
+}
+
+.debugger pre {
+    display: inline-block;
+    float: left;
+    margin-left: 30px;
+}
+
+.debugger pre div.active span {
+    color: blue;
+}
+
+.debugger pre div {
+    line-height: 0;
+}
+
+.debugger pre:first-child {
+    margin-left: 0;
+}

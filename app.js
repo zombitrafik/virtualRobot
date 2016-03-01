@@ -1,30 +1,59 @@
+var robot, program, Debugger;
+
 function init(memory, config) {
 
-    var io = new IOStream();
-    var interpreter = $$(memory, io);
-    var robot = new Robot(config, io);
+    program = $$(memory);
+    robot = new Robot(config, program);
 
-    interpreter.executeCommand();
-    var next = robot.executeCommand();
+    Debugger = robot.getDebugger();
 
-    while (next) {
-        interpreter.executeCommand();
-        next = robot.executeCommand();
-    }
-
-    interpreter.print();
-    robot.print();
-
-    /*    interpreter.executeCommand();
-     interpreter.executeCommand();
-     interpreter.executeCommand();
-     interpreter.executeCommand();
-     interpreter.executeCommand();
-     interpreter.executeCommand();
-
-     interpreter.print();
-     robot.print();*/
+    drawDebugInfo();
 }
+
+function run () {
+    robot.run(); // form start to end
+    //robot.executeCommand(); // line-by-line
+
+    program.print();
+    robot.print();
+    drawDebugInfo()
+}
+
+function step () {
+    robot.executeCommand(); // line-by-line
+
+    program.print();
+    robot.print();
+    drawDebugInfo();
+}
+
+
+function drawDebugInfo () {
+    var Debugger = robot.getDebugger();
+
+    var registers = document.getElementsByClassName('registers')[0];
+    registers.innerHTML = Debugger.registers.getRegisters().map(function (register, i) {
+        return '<div>R' + i + ' - ' + register + '</div>';
+    }).join('\n');
+    var memory = document.getElementsByClassName('memory')[0];
+    memory.innerHTML = Debugger.memory.getMemory().map(function (cell, i) {
+        return '<div ' + (i==Debugger.pointer?getClass('active'):'') + ' >' + (i==Debugger.pointer?'<span>></span>':' ') + '|' + getLeftPadding(i, 3) + '| ' + '<span>' + cell + '</span></div>';
+    }).join('\n');
+
+}
+
+function getClass (className) {
+    return ' class="' + className + '"';
+}
+
+function getLeftPadding(i, max) {
+    return Array.apply(null, new Array(max - i.toString().length)).map(function () {return ' ';}).join('') + i;
+}
+
+
+
+
+
 /*
 
  *  exit [127, 128, 136, 137, 127, 128, 136, 153]

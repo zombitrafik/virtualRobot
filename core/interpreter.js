@@ -1,4 +1,4 @@
-var $$ = (function (memory, io) {
+var $$ = (function (memory) {
 
     /*
 
@@ -58,6 +58,9 @@ var $$ = (function (memory, io) {
         this.put = function (addr, value) {
             program[addr] = value;
         };
+        this.getMemory = function () {
+            return program;
+        };
         this.print = function () {
             console.log(program);
         };
@@ -76,17 +79,18 @@ var $$ = (function (memory, io) {
                 return 'R' + i + ' - ' + register;
             }).join('\n');
         };
+        this.getRegisters = function () {
+            return registers;
+        };
         this.print = function () {
             console.log(this.toString());
         };
     }
 
-    function Interpreter(memory, registers, io) {
+    function Interpreter(memory, registers) {
         this.pattern = new Pattern();
         this.pointer = 0;
         this.commands = {};
-
-        io.setMemory(memory);
 
         var self = this;
 
@@ -159,8 +163,21 @@ var $$ = (function (memory, io) {
             this.commands[command.type](command.i, command.j);
         };
 
+        this.setIOStream = function (io) {
+            io.setMemory(memory);
+            this.io = io;
+        };
+
+        this.getMemory = function () {
+            return memory;
+        };
+
+        this.getRegisters = function () {
+            return registers;
+        };
+
         this.streamFlush = function () {
-            io.setCommand();
+            this.io.setCommand();
         };
 
         this.print = function () {
@@ -304,14 +321,13 @@ var $$ = (function (memory, io) {
             return !this.jInterval ? null : (value - this.start) % (this.iInterval.mul ? this.iInterval.mul : 1);
         }
     }
-    function init(memory, io) {
+    function init(memory) {
         return new Interpreter(
             new Memory(memory),
-            new Registers(8),
-            io
+            new Registers(8)
         );
     }
 
-    return init(memory, io);
+    return init(memory);
 
 });

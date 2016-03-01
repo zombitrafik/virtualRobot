@@ -1,6 +1,9 @@
-var Robot = function (config, io) {
+var Robot = function (config, interpreter) {
 
-    this.io = io;
+    this.io = new IOStream();
+
+    interpreter.setIOStream(this.io);
+    this.interpreter = interpreter;
 
     var map = new Map(config.map);
     var storage = config.robot.storage;
@@ -71,7 +74,12 @@ var Robot = function (config, io) {
         }
     };
 
+    this.run = function () {
+        while(this.executeCommand()) {}
+    };
+
     this.executeCommand = function () {
+        this.interpreter.executeCommand();
         var command = this.io.read();
         if(this.io.isSetCommand()) {
             if(command == 255) {
@@ -85,8 +93,18 @@ var Robot = function (config, io) {
         return true;
     };
 
+
     this.print = function () {
         map.print();
+    };
+
+    this.getDebugger = function () {
+        return {
+            pointer: interpreter.pointer,
+            registers: interpreter.getRegisters(),
+            memory: interpreter.getMemory(),
+            map: map
+        }
     };
 };
 
