@@ -101,6 +101,7 @@ var Robot = function (config, interpreter) {
     this.getDebugger = function () {
         return {
             pointer: interpreter.pointer,
+            command: interpreter.getCommandAtPointer(),
             registers: interpreter.getRegisters(),
             memory: interpreter.getMemory(),
             map: map

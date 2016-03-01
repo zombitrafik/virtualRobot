@@ -2,20 +2,28 @@
     font-family: monospace;
 }
 
-.debugger pre {
+.debugger .memory {
     display: inline-block;
-    float: left;
-    margin-left: 30px;
+    floaT: left;
+    width: 250px;
+    color: #F8F8F2;
+    background: #272822;
 }
 
-.debugger pre div.active span {
-    color: blue;
+.debugger .registers {
+    display: inline-block;
+    margin-left: 40px;
 }
 
-.debugger pre div {
-    line-height: 0;
+.debugger .registers div span {
+    color: red;
 }
 
-.debugger pre:first-child {
-    margin-left: 0;
+.debugger .memory div.active {
+    background: rgba(213, 110, 0, 0.33);
+}
+
+.debugger .memory div.active span {
+    color: #FFB00F;
+    font-weight: bolder;
 }

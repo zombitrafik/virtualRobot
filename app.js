@@ -10,7 +10,7 @@ function init(memory, config) {
     drawDebugInfo();
 }
 
-function run () {
+function run() {
     robot.run(); // form start to end
     //robot.executeCommand(); // line-by-line
 
@@ -19,7 +19,7 @@ function run () {
     drawDebugInfo()
 }
 
-function step () {
+function step() {
     robot.executeCommand(); // line-by-line
 
     program.print();
@@ -28,30 +28,56 @@ function step () {
 }
 
 
-function drawDebugInfo () {
+function drawDebugInfo() {
     var Debugger = robot.getDebugger();
 
     var registers = document.getElementsByClassName('registers')[0];
     registers.innerHTML = Debugger.registers.getRegisters().map(function (register, i) {
-        return '<div>R' + i + ' - ' + register + '</div>';
+        return '<div><span>R' + i + '</span> - ' + register + '</div>';
     }).join('\n');
     var memory = document.getElementsByClassName('memory')[0];
-    memory.innerHTML = Debugger.memory.getMemory().map(function (cell, i) {
-        return '<div ' + (i==Debugger.pointer?getClass('active'):'') + ' >' + (i==Debugger.pointer?'<span>></span>':' ') + '|' + getLeftPadding(i, 3) + '| ' + '<span>' + cell + '</span></div>';
-    }).join('\n');
+
+    var memoryChunk = getMemoryChunk(Debugger.memory.getMemory(), Debugger.pointer, 10);
+
+    var memoryData = [];
+    for(var i = memoryChunk.start; i < memoryChunk.end; i++) {
+        var cell = memoryChunk.data[i];
+        memoryData.push('<div ' + (i == Debugger.pointer ? getClass('active') : '') + ' >' + (i == Debugger.pointer ? '<span>></span>' : '&nbsp;') + '|<span>' + getLeftPadding(i, 3) + '</span>| ' + '<span>' + getRightPadding(cell, 3) + ' ' + (i == Debugger.pointer ? '[' + Debugger.command.type + ']' : '') + '</span></div>');
+    }
+
+    memory.innerHTML = memoryData.join('\n');
 
 }
 
-function getClass (className) {
+function getClass(className) {
     return ' class="' + className + '"';
 }
 
 function getLeftPadding(i, max) {
-    return Array.apply(null, new Array(max - i.toString().length)).map(function () {return ' ';}).join('') + i;
+    return Array.apply(null, new Array(max - i.toString().length)).map(function () {
+            return '&nbsp;';
+        }).join('') + i;
 }
 
+function getRightPadding(i, max) {
+    return i + Array.apply(null, new Array(max - i.toString().length)).map(function () {
+            return '&nbsp;';
+    }).join('');
+}
 
-
+function getMemoryChunk(data, middle, count) {
+    var start = middle <= count ? 0 : middle + count<data.length?middle - count:data.length - count*2,
+        end = middle + count<data.length?start + count * 2:data.length;
+    var chunk = [];
+    for (var i = start; i < end; i++) {
+        chunk[i] = data[i];
+    }
+    return {
+        data: chunk,
+        start: start,
+        end: end
+    }
+}
 
 
 /*

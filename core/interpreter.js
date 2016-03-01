@@ -90,6 +90,7 @@ var $$ = (function (memory) {
     function Interpreter(memory, registers) {
         this.pattern = new Pattern();
         this.pointer = 0;
+        this.command = undefined;
         this.commands = {};
 
         var self = this;
@@ -158,9 +159,9 @@ var $$ = (function (memory) {
         };
 
         this.executeCommand = function () {
-            var command = Command(memory.get(this.pointer), this.pattern);
+            this.command = Command(memory.get(this.pointer), this.pattern);
             this.pointer++;
-            this.commands[command.type](command.i, command.j);
+            this.commands[this.command.type](this.command.i, this.command.j);
         };
 
         this.setIOStream = function (io) {
@@ -174,6 +175,10 @@ var $$ = (function (memory) {
 
         this.getRegisters = function () {
             return registers;
+        };
+
+        this.getCommandAtPointer = function () {
+            return Command(memory.get(this.pointer), this.pattern);
         };
 
         this.streamFlush = function () {
