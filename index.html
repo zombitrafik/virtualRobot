@@ -6,10 +6,32 @@
     <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-    <div class="container">
-        <div class="actions">
-            <button onclick="run()">RUN</button>
-            <button onclick="step()">ONE STEP</button>
+    <div class="header">
+        <div class="step header-one active">
+            <div class="title">STEP 1</div>
+            <div class="description">Upload your own program</div>
+        </div>
+        <div class="step header-two">
+            <div class="title">STEP 2</div>
+            <div class="description">Configure map and robot</div>
+        </div>
+        <div class="step header-three">
+            <div class="title">STEP 3</div>
+            <div class="description">Debug your program</div>
+        </div>
+    </div>
+    <div style="clear: both;"></div>
+    <div class="container" id="interpreter">
+
+        <div id="step-one">
+            <textarea cols="20" placeholder="Past your source code here..." rows="20"></textarea>
+            <button onclick="goToStepTwo()">NEXT STEP</button>
+        </div>
+
+<!--    <div class="actions">
+            <button onclick="run()" class="run">RUN</button>
+            <button onclick="step()" class="step-by-step">ONE STEP</button>
+            <button onclick="reset()" class="reset">RESET</button>
         </div>
         <div class="debugger">
             <div class="memory">
@@ -23,11 +45,15 @@
         <div class="field">
 
         </div>
+        -->
+
+
     </div>
 </body>
 <script type="text/javascript" src="core/interpreter.js"></script>
 <script type="text/javascript" src="core/iostream.js"></script>
 <script type="text/javascript" src="core/map.js"></script>
 <script type="text/javascript" src="core/robot.js"></script>
+<script type="text/javascript" src="core/debugger.js"></script>
 <script type="text/javascript" src="app.js"></script>
 </html>

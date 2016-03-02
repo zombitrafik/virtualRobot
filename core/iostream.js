@@ -12,6 +12,7 @@ function IOStream() {
     };
 
     this.setMemory = function (_memory) {
+        _isSetCommand = false;
         memory = _memory;
     };
 
@@ -25,4 +26,5 @@ function IOStream() {
         memory.put(255, value);
         _isSetCommand = false;
     };
+
 }

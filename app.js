@@ -1,84 +1,45 @@
-var robot, program, Debugger;
+var robot, debug, interpreter;
+var program, config;
 
-function init(memory, config) {
+function init() {
 
-    program = $$(memory);
-    robot = new Robot(config, program);
+    interpreter = $$(program);
+    robot = new Robot(config, interpreter);
+    debug = new Debugger(robot);
 
-    Debugger = robot.getDebugger();
+}
 
-    drawDebugInfo();
+function reset () {
+    var prg = $$(program);
+    robot = new Robot(config, prg);
+    debug = new Debugger(robot);
 }
 
 function run() {
-    robot.run(); // form start to end
-    //robot.executeCommand(); // line-by-line
-
-    program.print();
-    robot.print();
-    drawDebugInfo()
+    robot.run();
+    debug.update();
+    enableRefresh();
 }
 
 function step() {
-    robot.executeCommand(); // line-by-line
+    if(!robot.executeCommand()) {
+        enableRefresh();
+    }
+    debug.update();
+}
 
-    program.print();
+function enableRefresh() {
+    interpreter.print();
     robot.print();
-    drawDebugInfo();
 }
 
+function goToStepTwo () {
+    var activeTab = document.getElementsByClassName('header-one')[0];
+    activeTab.className = activeTab.className.replace('active', '');
 
-function drawDebugInfo() {
-    var Debugger = robot.getDebugger();
-
-    var registers = document.getElementsByClassName('registers')[0];
-    registers.innerHTML = Debugger.registers.getRegisters().map(function (register, i) {
-        return '<div><span>R' + i + '</span> - ' + register + '</div>';
-    }).join('\n');
-    var memory = document.getElementsByClassName('memory')[0];
-
-    var memoryChunk = getMemoryChunk(Debugger.memory.getMemory(), Debugger.pointer, 10);
-
-    var memoryData = [];
-    for(var i = memoryChunk.start; i < memoryChunk.end; i++) {
-        var cell = memoryChunk.data[i];
-        memoryData.push('<div ' + (i == Debugger.pointer ? getClass('active') : '') + ' >' + (i == Debugger.pointer ? '<span>></span>' : '&nbsp;') + '|<span>' + getLeftPadding(i, 3) + '</span>| ' + '<span>' + getRightPadding(cell, 3) + ' ' + (i == Debugger.pointer ? '[' + Debugger.command.type + ']' : '') + '</span></div>');
-    }
-
-    memory.innerHTML = memoryData.join('\n');
-
+    var stepTab = document.getElementsByClassName('header-two')[0];
+    stepTab.className += ' active';
 }
-
-function getClass(className) {
-    return ' class="' + className + '"';
-}
-
-function getLeftPadding(i, max) {
-    return Array.apply(null, new Array(max - i.toString().length)).map(function () {
-            return '&nbsp;';
-        }).join('') + i;
-}
-
-function getRightPadding(i, max) {
-    return i + Array.apply(null, new Array(max - i.toString().length)).map(function () {
-            return '&nbsp;';
-    }).join('');
-}
-
-function getMemoryChunk(data, middle, count) {
-    var start = middle <= count ? 0 : middle + count<data.length?middle - count:data.length - count*2,
-        end = middle + count<data.length?start + count * 2:data.length;
-    var chunk = [];
-    for (var i = start; i < end; i++) {
-        chunk[i] = data[i];
-    }
-    return {
-        data: chunk,
-        start: start,
-        end: end
-    }
-}
-
 
 /*
 
@@ -98,54 +59,59 @@ function getMemoryChunk(data, middle, count) {
 
  */
 
+program = [
+    127, 128, 136, 137, 4, 153, // try to move up
 
-init(
-    [
-        127, 128, 136, 137, 4, 153, // try to move up
+    127, 128, 136, 137, 5, 153, // move right
 
-        127, 128, 136, 137, 5, 153, // move right
+    127, 128, 136, 137, 6, 153, // move down
 
-        127, 128, 136, 137, 6, 153, // move down
+    127, 128, 136, 137, 7, 153, // move left
 
-        127, 128, 136, 137, 7, 153, // move left
+    127, 128, 136, 137, 4, 153, // move up
 
-        127, 128, 136, 137, 4, 153, // move up
+    127, 128, 136, 137, 4, 153, // try to move up
 
-        127, 128, 136, 137, 4, 153, // try to move up
+    127, 128, 136, 137, 2, 153, // put down
 
-        127, 128, 136, 137, 2, 153, // put down
+    127, 128, 136, 137, 1, 153, // get storage
 
-        127, 128, 136, 137, 1, 153, // get storage
+    127, 128, 136, 137, 5, 153, // move right
 
-        127, 128, 136, 137, 5, 153, // move right
+    127, 128, 136, 137, 3, 153, // pick up
 
-        127, 128, 136, 137, 3, 153, // pick up
+    127, 128, 136, 137, 1, 153, // get storage
 
-        127, 128, 136, 137, 1, 153, // get storage
+    127, 128, 136, 137, 5, 153, // move right
 
-        127, 128, 136, 137, 5, 153, // move right
+    127, 128, 136, 137, 2, 153, // put down
 
-        127, 128, 136, 137, 2, 153, // put down
+    127, 128, 136, 137, 6, 153, // move down
 
-        127, 128, 136, 137, 6, 153, // move down
+    127, 128, 136, 137, 2, 153, // put down
 
-        127, 128, 136, 137, 2, 153, // put down
+    127, 128, 136, 137, 127, 128, 136, 153 //exit
+];
 
-        127, 128, 136, 137, 127, 128, 136, 153 //exit
+config = {
+    map: [
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        [0, 0, 2, 0, 1, 1, 1, 1, 1, 1],
+        [1, 0, 0, 0, 1, 1, 1, 1, 1, 1],
+        [1, 0, 0, 0, 1, 0, 0, 0, 0, 1],
+        [1, 1, 1, 1, 1, 0, 0, 0, 0, 1],
+        [1, 1, 1, 1, 1, 0, 1, 1, 1, 1],
+        [1, 0, 2, 0, 1, 0, 1, 1, 1, 1],
+        [1, 0, 0, 0, 1, 0, 1, 1, 1, 1],
+        [1, 0, 0, 0, 1, 1, 0, 0, 0, 1],
+        [1, 1, 1, 1, 1, 1, 1, 0, 1, 1]
     ],
-    {
-        map: [
-            [1, 1, 1, 1, 1],
-            [1, 0, 2, 0, 1],
-            [1, 0, 0, 0, 1],
-            [1, 0, 0, 0, 1],
-            [1, 1, 1, 1, 1]
-        ],
-        robot: {
-            x: 1,
-            y: 1,
-            storage: 1,
-            capacity: 10
-        }
+    robot: {
+        x: 1,
+        y: 1,
+        storage: 1,
+        capacity: 10
     }
-);
+};
+
+init();

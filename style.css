@@ -38,9 +38,127 @@
 
 .field {
     display: inline-block;
-    width: 300px;
-    background: #272822;;
-    padding: 0;
-    height: 300px;
+    background: #272822;
     margin-left: 30px;
+    padding: 2px;
+}
+
+.field div[data-x].wall {
+    float: left;
+    width: 26px;
+    height: 26px;
+    background: blueviolet;
+    border: 2px solid black;
+}
+
+.field div[data-x].label {
+    float: left;
+    width: 26px;
+    height: 26px;
+    background: yellow;
+    border: 2px solid black;
+}
+
+.field div[data-x].empty {
+    float: left;
+    width: 26px;
+    height: 26px;
+    background: silver;
+    border: 2px solid black;
+}
+
+.field div[data-x].robot {
+    float: left;
+    width: 26px;
+    height: 26px;
+    background: red;
+    border: 2px solid black;
+}
+
+.header {
+    width: 60%;
+    position: relative;
+    padding: 0;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.header .step.active {
+    background: #FF9800;
+    cursor: pointer;
+}
+.header .step {
+    cursor: default;
+}
+
+.header .step {
+    width: 33.33%;
+    display: inline-block;
+    line-height: 50px;
+    background: #D2D2D2;
+    color: white;
+    float: left;
+    text-align: center;
+}
+
+.header .step .title {
+    width: 70px;
+    background: #8A8A8A;
+    display: inline-block;
+    floaT: left;
+}
+
+.header .step.active .title {
+    background: #C77700;
+}
+
+.header .step. description {
+    display: inline-block;
+    width: calc(100% - 80px);
+    text-align: left;
+    padding-left: 10px;
+}
+
+.container {
+    width: 60%;
+    padding: 0;
+    margin: 0 auto;
+    height: 400px;
+    background: #EFEFEF;
+    border-top: 5px solid #C77700;
+}
+
+.container #step-one {
+    text-align: center;
+    padding-top: 20px;
+}
+
+.container button {
+    color: white;
+    margin-top: 10px;
+    background: #FF9800;
+    border: 0 solid black;
+    padding: 10px 30px;
+    border-bottom: 2px solid #FF9800;
+    cursor: pointer;
+    -webkit-transition: 0.2s;
+    -moz-transition: 0.2s;
+    -ms-transition: 0.2s;
+    -o-transition: 0.2s;
+    transition: 0.2s;
+    outline: none;
+}
+
+.container button:hover {
+    border-bottom: 2px solid #C77700;
+}
+
+
+textarea {
+    resize: none;
+    border: 0 solid black;
+    outline: none;
+    padding: 5px;
+    display: block;
+    margin: 0 auto;
 }

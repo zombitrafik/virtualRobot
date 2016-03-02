@@ -21,17 +21,14 @@ var Robot = function (config, interpreter) {
 
     var commands = {
         '0': function () {
-            console.log('CHECK IS LABEL', map.is(position, Map.typesEnum.LABEL));
             return map.is(position, Map.typesEnum.LABEL)?255:0;
         },
         '1': function () {
-            console.log('GET STORAGE', storage);
             return storage;
         },
         '2': function () {
             if(!map.is(position, Map.typesEnum.LABEL) && storage > 0) {
                 map.put(position, Map.typesEnum.LABEL);
-                console.log('PUT LABEL');
                 storage--;
                 return 255;
             } else {
@@ -41,7 +38,6 @@ var Robot = function (config, interpreter) {
         '3': function () {
             if(map.is(position, Map.typesEnum.LABEL) && storage < capacity) {
                 map.put(position, Map.typesEnum.EMPTY);
-                console.log('PICK UP');
                 storage++;
                 return 255;
             } else {
@@ -64,12 +60,10 @@ var Robot = function (config, interpreter) {
 
     this.move = function (side) {
         var nextPosition = position.add(side);
-        if(!map.is(nextPosition, Map.typesEnum.WALL)) {
+        if(!map.is(nextPosition, Map.typesEnum.WALL) && map.inRect(nextPosition)) {
             position = nextPosition;
-            console.log('MOVE ', side);
             return true;
         } else {
-            console.log('CANT MOVE ', side);
             return false;
         }
     };
@@ -83,7 +77,6 @@ var Robot = function (config, interpreter) {
         var command = this.io.read();
         if(this.io.isSetCommand()) {
             if(command == 255) {
-                console.log('EXIT');
                 return false;
             } else {
                 this.io.write(commands[command]());
@@ -92,7 +85,6 @@ var Robot = function (config, interpreter) {
         }
         return true;
     };
-
 
     this.print = function () {
         map.print();
@@ -103,8 +95,9 @@ var Robot = function (config, interpreter) {
             pointer: interpreter.pointer,
             command: interpreter.getCommandAtPointer(),
             registers: interpreter.getRegisters(),
-            memory: interpreter.getMemory(),
-            map: map
+            memory: interpreter.getMemory().getMemory(),
+            map: map.getMap(),
+            robot: position
         }
     };
 };
