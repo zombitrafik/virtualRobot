@@ -6,8 +6,8 @@ var Robot = function (config, interpreter) {
     this.interpreter = interpreter;
 
     var map = new Map(config.map);
-    var storage = config.robot.storage;
-    var capacity = config.robot.capacity;
+    var storage = config.robot.storage || 0;
+    var capacity = config.robot.capacity || 10;
     var position = new Vector2(config.robot.x, config.robot.y);
 
     var moveEnum = {
@@ -74,6 +74,10 @@ var Robot = function (config, interpreter) {
 
     this.executeCommand = function () {
         this.interpreter.executeCommand();
+        if(this.interpreter.pointer >= 255) {
+            return false;
+        }
+        console.log(this.interpreter.pointer);
         var command = this.io.read();
         if(this.io.isSetCommand()) {
             if(command == 255) {

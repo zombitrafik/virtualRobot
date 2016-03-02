@@ -7,15 +7,15 @@
 </head>
 <body>
     <div class="header">
-        <div class="step header-one active">
+        <div class="step header-1 active">
             <div class="title">STEP 1</div>
             <div class="description">Upload your own program</div>
         </div>
-        <div class="step header-two">
+        <div class="step header-2">
             <div class="title">STEP 2</div>
             <div class="description">Configure map and robot</div>
         </div>
-        <div class="step header-three">
+        <div class="step header-3">
             <div class="title">STEP 3</div>
             <div class="description">Debug your program</div>
         </div>
@@ -23,30 +23,53 @@
     <div style="clear: both;"></div>
     <div class="container" id="interpreter">
 
-        <div id="step-one">
-            <textarea cols="20" placeholder="Past your source code here..." rows="20"></textarea>
-            <button onclick="goToStepTwo()">NEXT STEP</button>
+        <div class="frame-1 active">
+            <textarea id="source-code" cols="20" placeholder="Past your source code here..." rows="20"></textarea>
+            <button onclick="goToStep(2)">NEXT STEP</button>
         </div>
 
-<!--    <div class="actions">
-            <button onclick="run()" class="run">RUN</button>
-            <button onclick="step()" class="step-by-step">ONE STEP</button>
-            <button onclick="reset()" class="reset">RESET</button>
+        <div class="frame-2">
+            <div class="settings">
+                <div class="textual-info">
+                    <span>Use left click to change type of cell (e.g. WALL, LABEL, EMPTY).</span>
+                    <p>Use right click to change Robot position.</p>
+                </div>
+                <div class="config-field">
+
+                </div>
+                <div class="other-configs">
+                    <div>Set initial storage value:</div>
+                    <input type="number" id="robot-storage" placeholder="STORAGE" value="3" min="0" max="10" />
+                    <div>Set maximum storage capacity value:</div>
+                    <input type="number" id="robot-capacity" placeholder="STORAGE CAPACITY" value="10" min="5" max="20"/>
+                </div>
+            </div>
+            <div style="clear: both;"></div>
+            <button onclick="newProgram()">NEW PROGRAM</button>
+            <button onclick="goToStep(3)">NEXT STEP</button>
         </div>
-        <div class="debugger">
-            <div class="memory">
+
+        <div class="frame-3">
+            <div class="actions">
+                <button onclick="run()" class="run">RUN (F9)</button>
+                <button onclick="step()" class="step-by-step">STEP BY STEP (F7)</button>
+                <button onclick="reset()" class="reset">RESET</button>
+            </div>
+            <div class="debugger">
+                <div class="memory">
+
+                </div>
+                <div class="registers">
+
+                </div>
+            </div>
+
+            <div class="field">
 
             </div>
-            <div class="registers">
-
-            </div>
+            <div style="clear: both"></div>
+            <button onclick="newProgram()" class="new-program">NEW PROGRAM</button>
         </div>
-
-        <div class="field">
-
-        </div>
-        -->
-
 
     </div>
 </body>

@@ -47,7 +47,7 @@ var $$ = (function (memory) {
     }
 
     function Memory(_program) {
-        var program = initArray(255);
+        var program = initArray(256);
         for (var i = 0; i < _program.length; i++) {
             program[i] = _program[i];
         }

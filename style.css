@@ -3,6 +3,11 @@
     -webkit-font-smoothing : none;
 }
 
+.debugger {
+    display: inline-block;
+    text-align: left;
+}
+
 .debugger .memory {
     display: inline-block;
     floaT: left;
@@ -36,14 +41,15 @@
 }
 
 
-.field {
+.field, .config-field {
     display: inline-block;
     background: #272822;
     margin-left: 30px;
     padding: 2px;
 }
 
-.field div[data-x].wall {
+.field div[data-x].wall,
+.config-field div[data-x].wall {
     float: left;
     width: 26px;
     height: 26px;
@@ -51,7 +57,8 @@
     border: 2px solid black;
 }
 
-.field div[data-x].label {
+.field div[data-x].label,
+.config-field div[data-x].label {
     float: left;
     width: 26px;
     height: 26px;
@@ -59,7 +66,8 @@
     border: 2px solid black;
 }
 
-.field div[data-x].empty {
+.field div[data-x].empty,
+.config-field div[data-x].empty {
     float: left;
     width: 26px;
     height: 26px;
@@ -67,7 +75,39 @@
     border: 2px solid black;
 }
 
-.field div[data-x].robot {
+.textual-info {
+    display: inline-block;
+    float: left;
+    text-align: left;
+    padding: 0 10px;
+    width: 203px;
+}
+
+.other-configs {
+    display: inline-block;
+    width: 200px;
+    text-align: left;
+    float: left;
+    margin-left: 30px;
+}
+
+.other-configs input {
+    border: 0 solid black;
+    outline: none;
+    padding: 5px 0px 5px 15px;
+    width: 100%;
+    margin: 5px 0;}
+
+.config-field {
+    float: left;
+}
+
+.config-field div {
+    cursor: pointer;
+}
+
+.field div[data-x].robot,
+.config-field div[data-x].robot {
     float: left;
     width: 26px;
     height: 26px;
@@ -76,7 +116,7 @@
 }
 
 .header {
-    width: 60%;
+    width: 810px;
     position: relative;
     padding: 0;
     margin: 0 auto;
@@ -120,16 +160,33 @@
 }
 
 .container {
-    width: 60%;
+    width: 810px;
     padding: 0;
     margin: 0 auto;
-    height: 400px;
+    height: 420px;
     background: #EFEFEF;
     border-top: 5px solid #C77700;
 }
 
-.container #step-one {
+.container .frame-1,
+.container .frame-2,
+.container .frame-3 {
+    display: none;
     text-align: center;
+}
+
+.container .frame-1.active,
+.container .frame-2.active,
+.container .frame-3.active {
+    display: block;
+}
+
+.container .frame-3 .actions {
+    margin-bottom: 10px;
+}
+
+.container .frame-1,
+.container .frame-2 {
     padding-top: 20px;
 }
 
