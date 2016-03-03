@@ -65,10 +65,10 @@ function Debugger (robot) {
                 }
                 switch (map[i][j]) {
                     case 0:
-                        classes.length == 0 && classes.push('wall');
+                        classes.length == 0 && classes.push('empty');
                         break;
                     case 1:
-                        classes.length == 0 && classes.push('empty');
+                        classes.length == 0 && classes.push('wall');
                         break;
                     case 2:
                         classes.push('label');

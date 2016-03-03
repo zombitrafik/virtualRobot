@@ -53,7 +53,9 @@
     float: left;
     width: 26px;
     height: 26px;
-    background: blueviolet;
+    background-image: url('images/brickwall.jpg');
+    background-repeat: no-repeat;
+    background-size: 40px;
     border: 2px solid black;
 }
 
@@ -62,8 +64,11 @@
     float: left;
     width: 26px;
     height: 26px;
-    background: yellow;
+    background-image: url('images/label.png');
+    background-repeat: no-repeat;
+    background-size: 16px;
     border: 2px solid black;
+    background-position-x: 5px;
 }
 
 .field div[data-x].empty,
@@ -71,7 +76,19 @@
     float: left;
     width: 26px;
     height: 26px;
-    background: silver;
+    background: #272822;
+    border: 2px solid black;
+}
+
+.field div[data-x].label.robot,
+.config-field div[data-x].label.robot {
+    float: left;
+    width: 26px;
+    height: 26px;
+    background-image: url('images/red-robot.png');
+    background-size: 26px;
+    background-repeat: no-repeat;
+    background-position-x: 0 !important;
     border: 2px solid black;
 }
 
@@ -94,7 +111,7 @@
 .other-configs input {
     border: 0 solid black;
     outline: none;
-    padding: 5px 0px 5px 15px;
+    padding: 5px 0 5px 15px;
     width: 100%;
     margin: 5px 0;}
 
@@ -111,7 +128,9 @@
     float: left;
     width: 26px;
     height: 26px;
-    background: red;
+    background-image: url('images/robot.png');
+    background-size: 26px;
+    background-repeat: no-repeat;
     border: 2px solid black;
 }
 

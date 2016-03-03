@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title></title>
+    <!-- build:css style.min.css -->
     <link rel="stylesheet" href="style.css"/>
+    <!-- /build -->
 </head>
 <body>
     <div class="header">
@@ -24,7 +26,7 @@
     <div class="container" id="interpreter">
 
         <div class="frame-1 active">
-            <textarea id="source-code" cols="20" placeholder="Past your source code here..." rows="20"></textarea>
+            <textarea id="source-code" cols="20" placeholder="Past your source code here (each command should be written line by line)." rows="20"></textarea>
             <button onclick="goToStep(2)">NEXT STEP</button>
         </div>
 
@@ -77,10 +79,12 @@
         <a href="https://github.com/zombitrafik/virtualRobot" target="_blank" alt="https://github.com/zombitrafik/virtualRobot"><span>@GitHub</span></a>
     </div>
 </body>
+<!-- build:js scripts/app.min.js -->
 <script type="text/javascript" src="core/interpreter.js"></script>
 <script type="text/javascript" src="core/iostream.js"></script>
 <script type="text/javascript" src="core/map.js"></script>
 <script type="text/javascript" src="core/robot.js"></script>
 <script type="text/javascript" src="core/debugger.js"></script>
 <script type="text/javascript" src="app.js"></script>
+<!-- /build -->
 </html>

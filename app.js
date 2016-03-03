@@ -42,8 +42,11 @@ function newProgram () {
     location.reload();
 }
 
+function isValidProgram () {
+
+}
+
 function goToStep (step) {
-    console.log(step);
     var activeTab = document.getElementsByClassName('header-' + (step - 1))[0];
     activeTab.className = activeTab.className.replace('active', '');
 
@@ -62,7 +65,9 @@ function goToStep (step) {
     }
 
     if(step == 3) {
-        program = document.getElementById('source-code').value.split('\n').map(function (v) {
+        program = document.getElementById('source-code').value.split('\n').filter(function (v) {
+            return isFinite(v) && parseInt(v) <= 255;
+        }).map(function (v) {
             return parseInt(v);
         });
         config = configurer.getConfig();
@@ -144,10 +149,10 @@ function Configurer (map, element) {
                 }
                 switch (map[i][j]) {
                     case 0:
-                        classes.length == 0 && classes.push('wall');
+                        classes.length == 0 && classes.push('empty');
                         break;
                     case 1:
-                        classes.length == 0 && classes.push('empty');
+                        classes.length == 0 && classes.push('wall');
                         break;
                     case 2:
                         classes.push('label');

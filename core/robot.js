@@ -10,6 +10,13 @@ var Robot = function (config, interpreter) {
     var capacity = config.robot.capacity || 10;
     var position = new Vector2(config.robot.x, config.robot.y);
 
+    this.normalizeValues = function () {
+        storage = storage<0?0:storage;
+        capacity = capacity<0?10:capacity<storage?storage:capacity;
+    };
+
+    this.normalizeValues();
+
     var moveEnum = {
         LEFT: new Vector2(-1, 0),
         RIGHT: new Vector2(1, 0),
@@ -77,7 +84,6 @@ var Robot = function (config, interpreter) {
         if(this.interpreter.pointer >= 255) {
             return false;
         }
-        console.log(this.interpreter.pointer);
         var command = this.io.read();
         if(this.io.isSetCommand()) {
             if(command == 255) {
