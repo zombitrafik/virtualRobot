@@ -77,14 +77,18 @@ function goToStep (step) {
 
 function initConfigurer () {
     var configField = document.getElementsByClassName('config-field')[0];
-    var map = [];
-    var size = 10;
-
-    for(var i = 0; i < size; i++) {
-        map[i] = Array.apply(null, (new Array(size))).map(function () {
-            return 0;
-        });
-    }
+    var map = [
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    ];
 
     configurer = new Configurer(map, configField)
 }

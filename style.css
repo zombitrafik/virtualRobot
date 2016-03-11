@@ -68,7 +68,7 @@
     background-repeat: no-repeat;
     background-size: 16px;
     border: 2px solid black;
-    background-position-x: 5px;
+    background-position: 5px 0;
 }
 
 .field div[data-x].empty,
@@ -88,7 +88,7 @@
     background-image: url('images/red-robot.png');
     background-size: 26px;
     background-repeat: no-repeat;
-    background-position-x: 0 !important;
+    background-position: 0 0 !important;
     border: 2px solid black;
 }
 
@@ -113,7 +113,8 @@
     outline: none;
     padding: 5px 0 5px 15px;
     width: 100%;
-    margin: 5px 0;}
+    margin: 5px 0;
+}
 
 .config-field {
     float: left;
