@@ -26,7 +26,28 @@
     <div class="container" id="interpreter">
 
         <div class="frame-1 active">
-            <textarea id="source-code" cols="20" placeholder="Past your source code here (each command should be written line by line)." rows="20"></textarea>
+            <div class="settings">
+                <div class="main">
+                    <textarea id="source-code" cols="20" placeholder="Past your source code here (each command should be written line by line)." rows="20"></textarea>
+                </div>
+                <div class="textual-info-frame-1">
+                    <span>*  exit: <br /> [127, 128, 136, 137, 127, 128, 136, 153]</span>
+                    <p>*  move up: <br /> [127, 128, 136, 137, 4, 153]</p>
+                    <p>*  move right: <br /> [127, 128, 136, 137, 5, 153]</p>
+                    <p>*  move down: <br /> [127, 128, 136, 137, 6, 153]</p>
+                    <p>*  move left: <br /> [127, 128, 136, 137, 7, 153]</p>
+                </div>
+                <div class="textual-info-frame-1">
+
+                    <span>*  pick up: <br /> [127, 128, 136, 137, 3, 153]</span>
+                    <p>*  put down: <br /> [127, 128, 136, 137, 2, 153]</p>
+                    <p>*  get storage: <br /> [127, 128, 136, 137, 1, 153]</p>
+                    <p>*  is label: <br /> [127, 128, 136, 137, 0, 153]</p>
+
+
+                </div>
+            </div>
+            <div style="clear: both;"></div>
             <button onclick="goToStep(2)">NEXT STEP</button>
         </div>
 

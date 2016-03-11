@@ -100,6 +100,14 @@
     width: 203px;
 }
 
+.textual-info-frame-1 {
+    display: block;
+    float: left;
+    text-align: left;
+    padding: 0px 10px;
+    width: 270px;
+}
+
 .other-configs {
     display: inline-block;
     width: 200px;
@@ -236,8 +244,7 @@ textarea {
     border: 0 solid black;
     outline: none;
     padding: 5px;
-    display: block;
-    margin: 0 auto;
+    width: 100%;
 }
 
 .footer {
@@ -253,4 +260,11 @@ textarea {
 
 .footer a span {
     color: gray;
+}
+
+.main {
+    display: block;
+    width: 200px;
+    float: left;
+    padding: 0 10px;
 }
